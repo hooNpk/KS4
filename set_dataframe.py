@@ -29,7 +29,8 @@ def make_df():
     "volume":volume, "gigwan":gigwan, "foreign":foreign})
   return df
 
-def tidy_df(price_frame):
+def tidy_df():
+  price_frame = make_df()
   price_frame['price'] = price_frame['price'].apply(str_tidy)
   price_frame['high_price'] = price_frame['high_price'].apply(str_tidy)
   price_frame['low_price'] = price_frame['low_price'].apply(str_tidy)
@@ -48,10 +49,3 @@ def tidy_df(price_frame):
   price_frame.gigwan = pd.to_numeric(price_frame.gigwan, errors='coerce')
   price_frame.foreign = pd.to_numeric(price_frame.foreign, errors='coerce')
   return price_frame
-
-def main():
-  df = make_df()
-  print(tidy_df(df).head(30))
-
-if __name__ == "__main__":
-  main()
