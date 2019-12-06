@@ -11,10 +11,11 @@ def str_tidy(elem):
   elem = elem.replace('%', '')
   return elem
 
-def make_df():
-  date, price, diff, diff_per, volume, gigwan, foreign = list_making_for_column()
-  high_price, low_price = high_low_price()
+def make_df(stock_code):
+  code, date, price, diff, diff_per, volume, gigwan, foreign = list_making_for_column(stock_code)
+  high_price, low_price = high_low_price(stock_code)
 
+  code = pd.Series(code)
   date = pd.Series(date)
   price = pd.Series(price)
   diff = pd.Series(diff)
@@ -25,12 +26,12 @@ def make_df():
   high_price = pd.Series(high_price)
   low_price = pd.Series(low_price)
 
-  df = pd.DataFrame({"date":date, "price":price, "high_price":high_price, "low_price":low_price, "diff":diff, "diff_per":diff_per,
+  df = pd.DataFrame({"code":code, "date":date, "price":price, "high_price":high_price, "low_price":low_price, "diff":diff, "diff_per":diff_per,
     "volume":volume, "gigwan":gigwan, "foreign":foreign})
   return df
 
-def tidy_df():
-  price_frame = make_df()
+def tidy_df(stock_code):
+  price_frame = make_df(stock_code)
   price_frame['price'] = price_frame['price'].apply(str_tidy)
   price_frame['high_price'] = price_frame['high_price'].apply(str_tidy)
   price_frame['low_price'] = price_frame['low_price'].apply(str_tidy)

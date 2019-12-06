@@ -1,20 +1,17 @@
 from bs4 import BeautifulSoup
 import requests
 
-from tidy_code import tidy_code_kosdak, tidy_code_kospi
-from get_data_from_web import get_code, kosdak_code, kospi_code
-
 def get_sise_url(code):
   url = 'https://finance.naver.com/item/sise_day.nhn?code={code_num}'.format(code_num=code)
   return url
 
-def high_low_price():
-  stock_name='힘스'
-  stock_code = get_code(stock_name)
+def high_low_price(stock_code):
+  #stock_name='힘스'
+  #stock_code = get_code(stock_name)
   url = get_sise_url(stock_code)
 
   high_price, low_price = [], []
-  for page in range(1, 11):
+  for page in range(1, 3):#11이였음
     pg_url = '{url}&page={page_num}'.format(url=url, page_num=page)
     r = requests.get(pg_url)
     if(r):
