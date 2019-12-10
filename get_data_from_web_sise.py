@@ -11,7 +11,7 @@ def high_low_price(stock_code):
   url = get_sise_url(stock_code)
 
   high_price, low_price = [], []
-  for page in range(1, 3):#11이였음
+  for page in range(1, 9):
     pg_url = '{url}&page={page_num}'.format(url=url, page_num=page)
     r = requests.get(pg_url)
     if(r):

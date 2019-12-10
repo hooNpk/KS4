@@ -9,6 +9,7 @@ def str_tidy(elem):
   elem = elem.replace('\n', '')
   elem = elem.replace('\t', '')
   elem = elem.replace('%', '')
+  elem = elem.replace(' ', '')
   return elem
 
 def make_df(stock_code):
@@ -49,4 +50,6 @@ def tidy_df(stock_code):
   price_frame.volume = pd.to_numeric(price_frame.volume, errors='coerce')
   price_frame.gigwan = pd.to_numeric(price_frame.gigwan, errors='coerce')
   price_frame.foreign = pd.to_numeric(price_frame.foreign, errors='coerce')
+  price_frame.dropna(inplace=True)
+  price_frame.set_index('date', inplace=True)
   return price_frame

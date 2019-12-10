@@ -12,9 +12,8 @@ def list_making_for_column(stock_code):
 
   code, date, price, diff, diff_per, volume, gigwan, foreign = [], [], [], [], [], [], [], []
 
-  for page in range(1, 2):#6이였음
+  for page in range(1, 5):
     pg_url = '{url}&page={page_num}'.format(url=url, page_num=page)
-    #GET HTML Document
     r = requests.get(pg_url)
     if(r):
       html_doc = r.text
