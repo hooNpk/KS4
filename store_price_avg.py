@@ -3,10 +3,11 @@ import pandas as pd
 from db_connect import write, read_table
 #write(db_name, df_name, stock_code)
 #read_table(db_name, table_name)
+from stock_inf_manage import stock_code_list
 
 
-def avg_line():
-  org_table = read_table('stock_inf_daily', 'k084850')
+def avg_line(stock_code):
+  org_table = read_table('stock_inf_daily', 'k'+stock_code)
   
   avg_price = org_table.loc[:,'date':'code']
   
@@ -21,7 +22,9 @@ def avg_line():
 
 
 def main():
-  avg_line()
+  code_list = stock_code_list()
+  for elem in code_list:
+    write('avg_stock_inf', avg_line(elem), elem)
 
 if __name__ == "__main__":
   main()
