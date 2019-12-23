@@ -6,12 +6,10 @@ def get_sise_url(code):
   return url
 
 def high_low_price(stock_code):
-  #stock_name='힘스'
-  #stock_code = get_code(stock_name)
   url = get_sise_url(stock_code)
 
   high_price, low_price = [], []
-  for page in range(1, 9):
+  for page in range(1, 7):
     pg_url = '{url}&page={page_num}'.format(url=url, page_num=page)
     r = requests.get(pg_url)
     if(r):

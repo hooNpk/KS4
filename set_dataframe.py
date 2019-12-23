@@ -29,6 +29,8 @@ def make_df(stock_code):
 
   df = pd.DataFrame({"code":code, "date":date, "price":price, "high_price":high_price, "low_price":low_price, "diff":diff, "diff_per":diff_per,
     "volume":volume, "gigwan":gigwan, "foreign":foreign})
+  
+  df.drop_duplicates(subset='date', inplace=True)
   return df
 
 def tidy_df(stock_code):
@@ -50,6 +52,8 @@ def tidy_df(stock_code):
   price_frame.volume = pd.to_numeric(price_frame.volume, errors='coerce')
   price_frame.gigwan = pd.to_numeric(price_frame.gigwan, errors='coerce')
   price_frame.foreign = pd.to_numeric(price_frame.foreign, errors='coerce')
-  price_frame.dropna(inplace=True)
+
   price_frame.set_index('date', inplace=True)
+  price_frame = price_frame.sort_index()
+  price_frame.dropna(inplace=True)
   return price_frame

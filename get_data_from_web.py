@@ -12,7 +12,7 @@ def list_making_for_column(stock_code):
 
   code, date, price, diff, diff_per, volume, gigwan, foreign = [], [], [], [], [], [], [], []
 
-  for page in range(1, 5):
+  for page in range(1, 4):
     pg_url = '{url}&page={page_num}'.format(url=url, page_num=page)
     r = requests.get(pg_url)
     if(r):
@@ -27,13 +27,16 @@ def list_making_for_column(stock_code):
         if(i%8==0 or i%8==1 or i%8==2):
           #비어있는 td를 빼주는 코드
           continue
-        code.append(stock_code)
+        
         date.append(tds[0].text)
+        code.append(stock_code)
         price.append(tds[1].text)
         diff.append(tds[2].text)
         diff_per.append(tds[3].text)
         volume.append(tds[4].text)
         gigwan.append(tds[5].text)
         foreign.append(tds[6].text)
+    else:
+      print('page None : ', page)
 
   return (code, date, price, diff, diff_per, volume, gigwan, foreign)
