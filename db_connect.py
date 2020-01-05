@@ -11,11 +11,15 @@ def write(db_name, df_to_db, stock_code):
   print('complete writing!')
   con.close()
 
-def read_table(db_name, table_name):
+def read_table(db_name, table_name, start_date=None, end_date=None):
   conn = pymysql.connect(host='localhost', user='root', password='myS@$r55t', db=db_name, charset='utf8')
   curs = conn.cursor()
 
-  sql = 'SELECT * FROM {table_name}'.format(table_name=table_name)
+  if(start_date):
+    sql = 'SELECT * FROM {table_name} WHERE date>={start} AND date<={end}'.format(table_name=table_name, start=start_date, end=end_date)
+  else:
+    sql = 'SELECT * FROM {table_name}'.format(table_name=table_name)
+
   curs.execute(sql)
   rows = curs.fetchall()
   df = pd.DataFrame(rows)
