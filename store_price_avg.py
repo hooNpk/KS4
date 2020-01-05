@@ -15,8 +15,8 @@ def avg_line(stock_code):
   fivedays_avg = fivedays_avg.rolling(5).mean()
   avg_price['fivedays_avg'] = fivedays_avg
 
-  twentyfivedays_avg = org_table.loc[:, 'price'].rolling(25).mean()
-  avg_price['twentyfivedays_avg'] = twentyfivedays_avg
+  twentydays_avg = org_table.loc[:, 'price'].rolling(20).mean()
+  avg_price['twentydays_avg'] = twentydays_avg
   print(avg_price)
   return avg_price
 
