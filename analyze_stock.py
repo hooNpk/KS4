@@ -6,7 +6,7 @@ from datetime import date, timedelta
 def get_code_data(stock_code):
   #db_name1 : 'avg_stock_inf'  db_name2 : 'stock_inf_daily'
   today = date.today()
-  start = today+timedelta(days=-3)
+  start = today+timedelta(days=-4)
   stock_avg_inf = read_table('avg_stock_inf', 'k'+str(stock_code), start, today)
   print(stock_avg_inf)
 

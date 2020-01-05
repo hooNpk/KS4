@@ -16,14 +16,13 @@ def read_table(db_name, table_name, start_date=None, end_date=None):
   curs = conn.cursor()
 
   if(start_date):
-    sql = 'SELECT * FROM {table_name} WHERE date>={start} AND date<={end}'.format(table_name=table_name, start=start_date, end=end_date)
+    sql = 'SELECT * FROM {table_name} WHERE DATE(date) BETWEEN \'{start}\' AND \'{end}\''.format(table_name=table_name, start=start_date, end=end_date)
   else:
     sql = 'SELECT * FROM {table_name}'.format(table_name=table_name)
 
   curs.execute(sql)
   rows = curs.fetchall()
   df = pd.DataFrame(rows)
-
   columns = curs.description
   columns = {columns[index][0] : column for index, column in enumerate(rows[0])}.keys()
   df.columns = columns
