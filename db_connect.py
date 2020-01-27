@@ -27,5 +27,6 @@ def read_table(db_name, table_name, start_date=None, end_date=None):
   columns = {columns[index][0] : column for index, column in enumerate(rows[0])}.keys()
   df.columns = columns
   
+  print('db reading succeed')
   conn.close()
   return df
