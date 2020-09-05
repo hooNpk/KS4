@@ -5,7 +5,7 @@ const Token = '1222541501:AAE4NchzefyiuYj_SW4ihDZIEbbZ5S4_H6s';
 const bot = new TelegramBot(Token, {polling:true});
 const CHAT_ID = '1006200994';
 
-cron.schedule('37 13 * * *', function(){
+cron.schedule('* * * * *', function(){
     botMessage();
 }).start();
 
