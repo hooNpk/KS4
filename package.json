@@ -1,0 +1,23 @@
+{
+  "name": "ks4",
+  "version": "1.0.0",
+  "description": "KS4는 Korea Short-term Stock Suggestion Serveice의 첫 글자들을 따왔습니다.\r 뜻 그대로 대한민국 단타 주식 추천 서비스입니다.",
+  "main": "push.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hooNpk/KS4.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hooNpk/KS4/issues"
+  },
+  "homepage": "https://github.com/hooNpk/KS4#readme",
+  "dependencies": {
+    "node-cron": "^2.0.3",
+    "node-telegram-bot-api": "^0.50.0"
+  }
+}
