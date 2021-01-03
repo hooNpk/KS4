@@ -3,33 +3,48 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QAxContainer import *
 
-class MyWindow(QMainWindow):
+class Kiwoom(QAxWidget):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("PyStock")
-        self.setGeometry(300, 300, 300, 150)
-
-        self.kiwoom = QAxWidget("KHOPENAPI.KHOpenAPICtrl.1")
-
-        btn1 = QPushButton("Login", self)
-        btn1.move(20, 20)
-        btn1.clicked.connect(self.btn1_clicked)
-
-        btn2 = QPushButton("Check state", self)
-        btn2.move(20, 70)
-        btn2.clicked.connect(self.btn2_clicked)
-
-    def btn1_clicked(self):
-        ret = self.kiwoom.dynamicCall("CommConnect()")
-
-    def btn2_clicked(self):
-        if self.kiwoom.dynamicCall("GetConnectState()") == 0:
-            self.statusBar().showMessage("Not connected")
+        self._create_kiwoom_instance()
+        self._set_signal_slots()
+    
+    def _create_kiwoom_instance(self):
+        self.setControl("KHOPENAPI.KHOpenAPICtrl.1")
+        print("CREATE KIWOOM INSTANCE")
+    
+    def _set_signal_slots(self):
+        self.OnEventConnect.connect(self._event_connect)
+        print("On EVENT CONNECT")
+    
+    def _event_connect(self, err_code):
+        if err_code == 0:
+            print("로그인 성공")
         else:
-            self.statusBar().showMessage("Connected")
+            print("로그인 에러코드 : "+str(err_code))
+        
+        self.login_event_loop.exit()
+    
+    def comm_connect(self):
+        self.dynamicCall("CommConnect()")
+        self.login_event_loop = QEventLoop()
+        self.login_event_loop.exec_()
+    
+    def get_all_codes_names(self):
+        ret = self.dynamicCall("GetCodeListByMarket(QString)", ["0"])
+        kospi_code_list = ret.split(';')
+        kospi_code_name_list = []
+
+        for code in kospi_code_list:
+            name = self.dynamicCall("GetMasterCodeName(QString)", [code])
+            kospi_code_name_list.append(code + " : " + name)
+        
+        for item in kospi_code_name_list:
+            print(item)
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    myWindow = MyWindow()
-    myWindow.show()
-    app.exec_()
+    kiwoom = Kiwoom()
+    kiwoom.comm_connect()
+    kiwoom.get_all_codes_names()
+    sys.exit(app.exec_())
