@@ -2,6 +2,7 @@ import sys
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QAxContainer import *
+from PyQt5.QtCore import *
 
 class Kiwoom(QAxWidget):
     def __init__(self):
@@ -22,7 +23,6 @@ class Kiwoom(QAxWidget):
             print("로그인 성공")
         else:
             print("로그인 에러코드 : "+str(err_code))
-        
         self.login_event_loop.exit()
     
     def comm_connect(self):
@@ -34,6 +34,7 @@ class Kiwoom(QAxWidget):
         ret = self.dynamicCall("GetCodeListByMarket(QString)", ["0"])
         kospi_code_list = ret.split(';')
         kospi_code_name_list = []
+        index = 0
 
         for code in kospi_code_list:
             name = self.dynamicCall("GetMasterCodeName(QString)", [code])
@@ -41,6 +42,11 @@ class Kiwoom(QAxWidget):
         
         for item in kospi_code_name_list:
             print(item)
+            index += 1
+            if index > 5:
+                break
+        
+        print("END OF FUCTION")
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
