@@ -45,3 +45,8 @@ As its name, This service recommend S.Korea's stock for short-term.(I used 'sugg
   
 ### Future Plan
    - want to adopt machine-learnging
+   
+   
+------
+KS4는 업데이트 중 입니다.
+자산을 자동으로 관리해주는 프로그램이 될 것 입니다.
