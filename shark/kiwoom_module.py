@@ -47,10 +47,11 @@ class Kiwoom(QAxWidget):
                 break
         
         print("END OF FUCTION")
-
+"""
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     kiwoom = Kiwoom()
     kiwoom.comm_connect()
     kiwoom.get_all_codes_names()
     sys.exit(app.exec_())
+"""

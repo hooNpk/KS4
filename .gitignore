@@ -1,1 +1,5 @@
 node_modules/
+toy_elixir/.idea
+toy_elixir/toy/_build
+toy_elixir/toy/deps
+toy_elixir/toy/config
