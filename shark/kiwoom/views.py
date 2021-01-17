@@ -24,3 +24,7 @@ def today(request):
     codes = kiwoom.get_all_codes_names()
     print(codes)
     return HttpResponse("This is for returning today's information")
+
+def trading(request):
+    print(request)
+    return HttpResponse("Request for Trading:::::")
