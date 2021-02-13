@@ -93,8 +93,8 @@ def get_code(stock_name):
     #print(code)   
     return (code[-1])
 
-def get_url(stock_name, case): #어느 용도로 쓰느냐에 따라 url을 다르기 리턴해줘야할 필요가 있음
-    code = get_code(stock_name)
+def get_url(code, case): #어느 용도로 쓰느냐에 따라 url을 다르기 리턴해줘야할 필요가 있음
+    #code = get_code(stock_name)
     #종목 분석 url
     url = ''
     if(case=='brief'):
@@ -124,7 +124,7 @@ def return_fundamental(stock_name):
     info = []
     
     # @@ CODE
-    info.append(get_code(stock_name))
+    info.append(stock_name)
 
     # @@Base Information
     base_info = base_table.find_all('table')[0].find_all('dt', {'class' : 'line-left'})
@@ -156,7 +156,10 @@ def return_fundamental(stock_name):
     url = get_url(stock_name, 'main')
     r = requests.get(url).text
     soup = BeautifulSoup(r, 'html.parser')
-    finance_info = soup.select('div.section.cop_analysis div.sub_section')[0]
+    try:
+        finance_info = soup.select('div.section.cop_analysis div.sub_section')[0]
+    except IndexError:
+        return 0
 
     th_data = [item.get_text().strip() for item in finance_info.select('thead th')]
     annual_date = th_data[3:7]

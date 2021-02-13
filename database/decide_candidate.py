@@ -1,4 +1,4 @@
-from get_fund_from_naver import return_fundamental
+from get_fund_from_naver import return_fundamental, str_tidy
 
 def sales_increase(y3, y2, y1):
     sales = y2[0] > y3[0]
@@ -8,32 +8,34 @@ def sales_increase(y3, y2, y1):
         return ( sales and y1[0] > y2[0] )
 
 def positive_profit(y3, y2, y1):
-    profit = float(y3[1]) > 0
-    profit = profit and (float(y2[1]) > 0)
+    profit = float(str_tidy(y3[1])) > 0
+    profit = profit and (float(str_tidy(y2[1])) > 0)
     if(y1[1]==''):
         return profit
     else:
-        return profit and (float(y1[1]) > 0)
+        return profit and (float(str_tidy(y1[1])) > 0)
 
 def quick_ratio(y3, y2, y1):
-    quick = float(y3[4]) > 80
-    quick = quick and (float(y2[4]) > 80)
+    if(y3[4]==''):
+        return False
+    quick = float(str_tidy(y3[4])) > 80
+    quick = quick and (float(str_tidy(y2[4])) > 80)
     if(y1[4]==''):
         return quick
     else:
-        return quick and (float(f1[4]) > 80)
+        return quick and (float(str_tidy(f1[4])) > 80)
 
 def check_per(q2):
-    return float(q2[5]) < 50
+    return float(str_tidy(q2[5])) < 50
 
-def is_candidate():
+def is_candidate(fund):
     """
         1) 이전 3년 연간영업이익 > 0
         2) 이전 3년 연간 매출 증가
         4) 이전 3년 연간 당좌비율 > 80%
         5) 마지막 분기 PER < 50
     """
-    fund = return_fundamental('락앤락')
+    #fund = return_fundamental('락앤락')
     
     y3, y2, y1 = fund[8], fund[9], fund[10]
     q4, q3, q2, q1 = fund[11], fund[12], fund[13], fund[14]
