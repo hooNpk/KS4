@@ -185,7 +185,9 @@ def return_fundamental(stock_name):
     for i in [1, 2, 3, 6, 7, 8, 9]:
         temp = []
         for j in [0, 1, 3, 6, 7, 10]:
-            temp.append(str_tidy(finance.iloc[j, i]))
+            data = str_tidy(finance.iloc[j, i])
+            if(data=''): data=0
+            temp.append(data)
         info.append(temp)
 
     info.append(finance.iloc[13 ,2])
