@@ -112,6 +112,7 @@ def str_tidy(elem):
     elem = elem.replace('원', '')
     elem = elem.replace('주', '')
     elem = elem.replace(' ', '')
+    elem = elem.replace('-', '')
     return elem
 
 def return_fundamental(stock_name):
@@ -186,12 +187,14 @@ def return_fundamental(stock_name):
         temp = []
         for j in [0, 1, 3, 6, 7, 10]:
             data = str_tidy(finance.iloc[j, i])
-            if(data=''): data=0
+            if(data==''): data='-777'
             temp.append(data)
         info.append(temp)
-
-    info.append(finance.iloc[13 ,2])
-    info.append(finance.iloc[14, 2])
+    
+    if(str_tidy(finance.iloc[13, 2]) == ''): info.append('-777')
+    else:   info.append(str_tidy(finance.iloc[13 ,2]))
+    if(str_tidy(finance.iloc[13, 2]) == ''): info.append('-777')
+    else:   info.append(finance.iloc[14, 2])
     #print(info)
     print("Got information of {0}".format(stock_name))
     return info

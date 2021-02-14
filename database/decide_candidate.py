@@ -2,7 +2,7 @@ from get_fund_from_naver import return_fundamental, str_tidy
 
 def sales_increase(y3, y2, y1):
     sales = y2[0] > y3[0]
-    if(y1[0]==''):
+    if(y1[0]=='-777'):
         return sales
     else:
         return ( sales and y1[0] > y2[0] )
@@ -10,17 +10,17 @@ def sales_increase(y3, y2, y1):
 def positive_profit(y3, y2, y1):
     profit = float(str_tidy(y3[1])) > 0
     profit = profit and (float(str_tidy(y2[1])) > 0)
-    if(y1[1]==''):
+    if(y1[1]=='-777'):
         return profit
     else:
         return profit and (float(str_tidy(y1[1])) > 0)
 
 def quick_ratio(y3, y2, y1):
-    if(y3[4]==''):
+    if(y3[4]=='-777'):
         return False
     quick = float(str_tidy(y3[4])) > 80
     quick = quick and (float(str_tidy(y2[4])) > 80)
-    if(y1[4]==''):
+    if(y1[4]=='-777'):
         return quick
     else:
         return quick and (float(str_tidy(f1[4])) > 80)

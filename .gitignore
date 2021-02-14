@@ -5,4 +5,4 @@ toy_elixir/toy/deps
 toy_elixir/toy/config
 shark/shark/settings.py
 __pycache__
-database/__pycache__/
+database/__pycache__
