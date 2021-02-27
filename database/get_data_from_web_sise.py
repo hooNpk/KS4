@@ -1,4 +1,7 @@
 from bs4 import BeautifulSoup
+from get_fund_from_naver import str_tidy
+from progressbar import ProgressBar
+from time import sleep, time
 import requests
 
 def get_sise_url(code):
@@ -7,11 +10,13 @@ def get_sise_url(code):
 
 def high_low_price(stock_code):
   url = get_sise_url(stock_code)
+  MAXPAGE = 50
 
   high_price, low_price = [], []
-  for page in range(1, 7):
+  bar = ProgressBar()
+  for page in bar(range(1, MAXPAGE)):
     pg_url = '{url}&page={page_num}'.format(url=url, page_num=page)
-    r = requests.get(pg_url)
+    r = requests.get(pg_url, headers={'User-Agent' : 'Mozilla/5.0'})
     if(r):
       html_doc = r.text
       soup = BeautifulSoup(html_doc, features='lxml')
@@ -25,4 +30,12 @@ def high_low_price(stock_code):
           continue
         high_price.append(tds[4].text)
         low_price.append(tds[5].text)
+    sleep(0.1)
   return (high_price, low_price)
+
+print('now crawling')
+tik = time()
+#print(*high_low_price('005930'), sep='\n\n')
+high_low_price('005930')
+tok = time()
+print(tok - tik, 's spended', sep='')

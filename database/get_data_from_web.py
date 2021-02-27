@@ -1,5 +1,7 @@
 from bs4 import BeautifulSoup
 from get_fund_from_naver import str_tidy
+from time import sleep, time
+from progressbar import ProgressBar
 import requests
 
 def get_url(stock_code):
@@ -10,11 +12,12 @@ def list_making_for_column(stock_code):
   #stock_name = '힘스'
   #stock_code = get_code(stock_name)
   url = get_url(stock_code)
-  MAXPAGE = 4
+  MAXPAGE = 50
 
   code, date, price, diff, diff_per, volume, gigwan, foreign = [], [], [], [], [], [], [], []
 
-  for page in range(1, MAXPAGE):
+  bar = ProgressBar()
+  for page in bar(range(1, MAXPAGE)):
     pg_url = '{url}&page={page_num}'.format(url=url, page_num=page)
     r = requests.get(pg_url, headers = {'User-Agent' : 'Mozilla/5.0'})
     if(r):
@@ -46,7 +49,13 @@ def list_making_for_column(stock_code):
         foreign.append(tds[6].text)
     else:
       print('page None : ', page)
+    sleep(0.1)
 
   return (code, date, price, diff, diff_per, volume, gigwan, foreign)
 
-print(*list_making_for_column('005930'), sep='\n\n')
+print('now crawling')
+tik = time()
+#print(*list_making_for_column('005930'), sep='\n\n')
+list_making_for_column('005930')
+tok = time()
+print(tok - tik, 's spended', sep='')
