@@ -9,10 +9,13 @@ def get_url(stock_code):
   return url
 
 def list_making_for_column(stock_code):
+  print('now crawling...')
+  tik = time()
+
   #stock_name = '힘스'
   #stock_code = get_code(stock_name)
   url = get_url(stock_code)
-  MAXPAGE = 50
+  MAXPAGE = 5
 
   code, date, price, diff, diff_per, volume, gigwan, foreign = [], [], [], [], [], [], [], []
 
@@ -33,9 +36,9 @@ def list_making_for_column(stock_code):
           #비어있는 td를 빼주는 코드
           continue
         
-        date.append(tds[0].text)
-        code.append(stock_code)
-        price.append(tds[1].text)
+        date.append("'%s'" % tds[0].text)
+        code.append("'%s'" % stock_code)
+        price.append(str_tidy(tds[1].text))
         if '상승' in str(tds[2]):
           diff.append('+')
         elif '하락' in str(tds[2]):
@@ -45,17 +48,15 @@ def list_making_for_column(stock_code):
         diff[-1] += str_tidy(tds[2].text)
         diff_per.append(tds[3].text.replace('\t', '').replace('\n', '').replace('%', ''))
         volume.append(str_tidy(tds[4].text))
-        gigwan.append(tds[5].text)
-        foreign.append(tds[6].text)
+        gigwan.append("'%s'" % tds[5].text)
+        foreign.append("'%s'" % tds[6].text)
     else:
       print('page None : ', page)
     sleep(0.1)
 
+  tok = time()
+  print(tok - tik, 's spended', sep='')
   return (code, date, price, diff, diff_per, volume, gigwan, foreign)
 
-print('now crawling')
-tik = time()
 #print(*list_making_for_column('005930'), sep='\n\n')
-list_making_for_column('005930')
-tok = time()
-print(tok - tik, 's spended', sep='')
+#list_making_for_column('005930')
