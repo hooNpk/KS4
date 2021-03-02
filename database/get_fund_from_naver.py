@@ -115,7 +115,17 @@ def str_tidy(elem):
     elem = elem.replace('-', '')
     return elem
 
+def num_tidy(elem):
+    elem = elem.replace(',', '')
+    elem = elem.replace('\n', '')
+    elem = elem.replace('\t', '')
+    elem = elem.replace('\r', '')
+    elem = elem.replace(' ', '')
+    elem = elem.replace('%', '')
+    return elem
+
 def return_fundamental(stock_name):
+    print("Start getting information of {0}".format(stock_name))
     url = get_url(stock_name, 'brief')
     r = requests.get(url)
     html_doc = r.text
@@ -172,7 +182,10 @@ def return_fundamental(stock_name):
     finance_data.resize(len(finance_index), 10)
 
     finance_date = annual_date + quarter_date
-    finance = pd.DataFrame(data=finance_data[0:, 0:], index=finance_index, columns=finance_date)
+    try:
+        finance = pd.DataFrame(data=finance_data[0:, 0:], index=finance_index, columns=finance_date)
+    except:
+        return
     col = finance.columns
     row = finance.index
     
@@ -186,7 +199,7 @@ def return_fundamental(stock_name):
     for i in [1, 2, 3, 6, 7, 8, 9]:
         temp = []
         for j in [0, 1, 3, 6, 7, 10]:
-            data = str_tidy(finance.iloc[j, i])
+            data = num_tidy(finance.iloc[j, i])
             if(data==''): data='-777'
             temp.append(data)
         info.append(temp)

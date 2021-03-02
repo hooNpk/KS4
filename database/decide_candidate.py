@@ -1,4 +1,4 @@
-from get_fund_from_naver import return_fundamental, str_tidy
+from get_fund_from_naver import return_fundamental
 
 def sales_increase(y3, y2, y1):
     sales = y2[0] > y3[0]
@@ -8,25 +8,34 @@ def sales_increase(y3, y2, y1):
         return ( sales and y1[0] > y2[0] )
 
 def positive_profit(y3, y2, y1):
-    profit = float(str_tidy(y3[1])) > 0
-    profit = profit and (float(str_tidy(y2[1])) > 0)
+    print(y3[1])
+    try:
+        profit = float(y3[1]) > 0
+    except:
+        return False
+
+    try:
+        profit = profit and (float(y2[1]) > 0)
+    except:
+        return False
+    
     if(y1[1]=='-777'):
         return profit
     else:
-        return profit and (float(str_tidy(y1[1])) > 0)
+        return profit and (float(y1[1]) > 0)
 
 def quick_ratio(y3, y2, y1):
     if(y3[4]=='-777'):
         return False
-    quick = float(str_tidy(y3[4])) > 80
-    quick = quick and (float(str_tidy(y2[4])) > 80)
+    quick = float(y3[4]) > 80
+    quick = quick and (float(y2[4]) > 80)
     if(y1[4]=='-777'):
         return quick
     else:
-        return quick and (float(str_tidy(f1[4])) > 80)
+        return quick and (float(f1[4]) > 80)
 
 def check_per(q2):
-    return float(str_tidy(q2[5])) < 50
+    return float(q2[5]) < 50
 
 def is_candidate(fund):
     """
