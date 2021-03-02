@@ -8,7 +8,6 @@ def sales_increase(y3, y2, y1):
         return ( sales and y1[0] > y2[0] )
 
 def positive_profit(y3, y2, y1):
-    print(y3[1])
     try:
         profit = float(y3[1]) > 0
     except:
@@ -35,7 +34,9 @@ def quick_ratio(y3, y2, y1):
         return quick and (float(f1[4]) > 80)
 
 def check_per(q2):
-    return float(q2[5]) < 50
+    print("PER Check ", float(q2[5]))
+    per = float(q2[5])
+    return per < 50 and per > 0
 
 def is_candidate(fund):
     """
