@@ -48,8 +48,8 @@ def list_making_for_column(stock_code):
         diff[-1] += str_tidy(tds[2].text)
         diff_per.append(tds[3].text.replace('\t', '').replace('\n', '').replace('%', ''))
         volume.append(str_tidy(tds[4].text))
-        gigwan.append("'%s'" % tds[5].text)
-        foreign.append("'%s'" % tds[6].text)
+        gigwan.append(tds[5].text.replace(',', ''))
+        foreign.append(tds[6].text.replace(',', ''))
     else:
       print('page None : ', page)
     sleep(0.1)
