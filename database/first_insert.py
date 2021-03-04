@@ -8,8 +8,10 @@ cur.execute('SELECT code FROM candidates;')
 codes = cur.fetchall()
 
 for i in range(2):
+    print('CREATE TABLE test%d(code varchar(10), date varchar(50) PRIMARY KEY, price integer, diff varchar(50), diff_per varchar(10), volume integer, gigwan varchar(50), foreigner varchar(50));' % i)
     cur.execute('CREATE TABLE test%d(code varchar(10), date varchar(50) PRIMARY KEY, price integer, diff varchar(50), diff_per varchar(10), volume integer, gigwan varchar(50), foreigner varchar(50));' % i)
     columns = list_making_for_column(*codes[i])
+    print(columns)
     for row in zip(*columns):
         cur.execute('INSERT INTO test%d VALUES (%s);' % (i, ', '.join(row)))
     cur.execute('COMMIT;')
