@@ -6,16 +6,17 @@ import matplotlib.pyplot as plt
 
 conn = pg2.connect(database='postgres', user='postgres', password='secret', host='127.0.0.1')
 cur = conn.cursor()
-cur.execute('SELECT price, diff, diff_per, volume, gigwan, foreigner FROM test1;')
+cur.execute("SELECT price, diff, diff_per, volume, gigwan, foreigner FROM test1 order by date;")
 rows = cur.fetchall()
 cur.close()
 print(len(rows))
 
 stride = 10
-Y_test = np.array([rows[x][0] for x in range(10)])
-X_test = np.array([rows[x+1:x+1+stride] for x in range(10)])
-Y_train = np.array([rows[x][0] for x in range(11, len(rows)-stride)])
-X_train = np.array([rows[x+1:x+1+stride] for x in range(11, len(rows)-stride)])
+test_size = 10
+Y_test = np.array([rows[x][0] for x in range(test_size)])
+X_test = np.array([rows[x+1:x+1+stride] for x in range(test_size)])
+Y_train = np.array([rows[x][0] for x in range(test_size, len(rows)-stride)])
+X_train = np.array([rows[x+1:x+1+stride] for x in range(test_size, len(rows)-stride)])
 print(X_train.shape, Y_train.shape)
 print(X_test.shape, Y_test.shape)
 
