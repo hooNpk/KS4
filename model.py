@@ -6,9 +6,10 @@ import matplotlib.pyplot as plt
 
 conn = pg2.connect(database='postgres', user='postgres', password='secret', host='127.0.0.1')
 cur = conn.cursor()
-cur.execute('SELECT price, diff, diff_per, volume, gigwan, foreigner FROM test0;')
+cur.execute('SELECT price, diff, diff_per, volume, gigwan, foreigner FROM test1;')
 rows = cur.fetchall()
 cur.close()
+print(len(rows))
 
 stride = 10
 Y_test = np.array([rows[x][0] for x in range(10)])
