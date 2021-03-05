@@ -15,7 +15,16 @@ def list_making_for_column(stock_code):
   #stock_name = '힘스'
   #stock_code = get_code(stock_name)
   url = get_url(stock_code)
-  MAXPAGE = 5
+  MAXPAGE = 10
+
+  r = requests.get(url, headers={'User-Agent' : 'Mozilla/5.0'})
+  if(r):
+    html_doc = r.text
+    soup = BeautifulSoup(html_doc, features='lxml')
+    soup.prettify()
+    to_end = soup.find('td', class_='pgRR')
+    string = to_end.find('a').attrs['href'][-3:]
+    MAXPAGE = int(string)
 
   code, date, price, diff, diff_per, volume, gigwan, foreign = [], [], [], [], [], [], [], []
 
@@ -48,8 +57,8 @@ def list_making_for_column(stock_code):
         diff[-1] += str_tidy(tds[2].text)
         diff_per.append(tds[3].text.replace('\t', '').replace('\n', '').replace('%', ''))
         volume.append(str_tidy(tds[4].text))
-        gigwan.append("'%s'" % tds[5].text)
-        foreign.append("'%s'" % tds[6].text)
+        gigwan.append(tds[5].text.replace(',', ''))
+        foreign.append(tds[6].text.replace(',', ''))
     else:
       print('page None : ', page)
     sleep(0.1)

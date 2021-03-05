@@ -200,8 +200,10 @@ def return_fundamental(stock_name):
         temp = []
         for j in [0, 1, 3, 6, 7, 10]:
             data = num_tidy(finance.iloc[j, i])
-            if(data=='-') data=0
-            else if(data==''): data='-777'
+            if(data=='-'):
+                data=0
+            elif(data==''):
+                data='-777'
             temp.append(data)
         info.append(temp)
     
